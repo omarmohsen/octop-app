@@ -1,0 +1,47 @@
+stages:
+  - test
+  - build
+  - deploy
+variables:
+  DOCKER_HOST: tcp://localhost:2375/
+  DOCKER_DRIVER: overlay2
+  APP_NAME: octop-app
+  REPO: https://github.com/omarmohsen/octop-app
+  KUBECONFIG: ~/.kube/config
+  IMAGE_TAG: 0.1
+
+#This is only needed because the repo is in github, the repo should be in gitlab itself
+before_script:
+  - git clone ${REPO} 
+  - sudo apt install -y composer
+test:
+  stage: test
+  script:
+   - cd octop-app
+   - ./vendor/bin/phpunit
+
+build:
+  stage: build
+  script:
+  - docker build -t docker.io/omarmohsen/octoapp:${IMAGE_TAG}
+  # $DOCKER_USER and $DOCKER_PASSWORD should be stores as a secret inside Gitlab itself (sealed)
+  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD docker.io
+  - docker push docker.io/omarmohsen/octoapp:${IMAGE_TAG}
+deploy:
+  stage: deploy
+  image: alpine/helm:3.2.1
+  script:
+    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+    - helm upgrade ${APP_NAME} ./chart --install --set image.tag=${IMAGE_TAG} --namespace ${APP_NAME}
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
+      when: always
+helmtest:
+  stage: deploy 
+  image: alpine/helm:3.2.1
+  script:
+    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+    - helm test {$APP_NAME}
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'master'
+      when: always

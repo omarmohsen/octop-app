@@ -1,0 +1,18 @@
+apiVersion: v1
+automountServiceAccountToken: true
+kind: ServiceAccount
+metadata:
+  annotations:
+    meta.helm.sh/release-name: test
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2024-05-18T14:19:47Z"
+  labels:
+    app.kubernetes.io/instance: test
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: octophp
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: octophp-0.1.0
+  name: test-octophp
+  namespace: default
+  resourceVersion: "5401"
+  uid: 2977b2eb-ae00-44fa-b9cd-b52e0db2b080

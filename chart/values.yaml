@@ -1,0 +1,132 @@
+appEnv: local
+replicaCount: 1
+image:
+  repository: docker.io/omarmohsen/octop-app
+  pullPolicy: IfNotPresent
+  tag: "0.1"
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: NodePort
+  port: 80
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+db:
+  type: mysql
+  user: laravel
+  password: D4$vXsz2C
+  name: octophpdb
+  replicaCount: 1
+  image:
+    repository: docker.io/mysql
+    pullPolicy: IfNotPresent
+    tag: "8.0"
+    imagePullSecrets: []
+
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 3306
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  readinessProbe:
+    tcpSocket:
+      port: 3306
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+redis:
+  password: a38C8v@#vs
+  replicaCount: 1
+  image:
+    repository: docker.io/redis
+    pullPolicy: IfNotPresent
+    tag: "alpine3.19"
+    imagePullSecrets: []
+
+  podAnnotations: {}
+  podLabels: {}
+
+  podSecurityContext: {}
+
+  securityContext: {}
+
+  service:
+    type: ClusterIP
+    port: 6379
+  resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  readinessProbe:
+    tcpSocket:
+      port: 6379
+  volumes: []
+  volumeMounts: []
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: test
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2024-05-18T14:19:47Z"
+  labels:
+    app.kubernetes.io/instance: test
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: octophp
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: octophp-0.1.0
+  name: test-octophp-redis
+  namespace: default
+  resourceVersion: "5404"
+  uid: 3fd78714-0319-4dff-84be-36b14a1aeff8
+spec:
+  clusterIP: 10.43.119.94
+  clusterIPs:
+  - 10.43.119.94
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: redis
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app.kubernetes.io/instance: test-redis
+    app.kubernetes.io/name: octophp
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

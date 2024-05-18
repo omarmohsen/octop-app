@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "octophp.fullname" . }}-redis
+  labels:
+    {{- include "octophp.labels" . | nindent 4 }}-redis
+spec:
+  type: {{ .Values.redis.service.type }}
+  ports:
+    - port: {{ .Values.redis.service.port }}
+      protocol: TCP
+      name: redis
+  selector:
+    {{- include "octophp.selectorLabels" . | nindent 4 }}-redis

@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: test
+    meta.helm.sh/release-namespace: default
+  creationTimestamp: "2024-05-18T14:19:47Z"
+  labels:
+    app.kubernetes.io/instance: test
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: octophp
+    app.kubernetes.io/version: 1.16.0
+    helm.sh/chart: octophp-0.1.0
+  name: test-octophp-db
+  namespace: default
+  resourceVersion: "5406"
+  uid: 12557521-dd26-4014-9792-5cd1887415ca
+spec:
+  clusterIP: 10.43.92.108
+  clusterIPs:
+  - 10.43.92.108
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: db
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+  selector:
+    app.kubernetes.io/instance: test-db
+    app.kubernetes.io/name: octophp
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

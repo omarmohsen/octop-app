@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "octophp.fullname" . }}-db
+  labels:
+    {{- include "octophp.labels" . | nindent 4 }}-db
+spec:
+  type: {{ .Values.db.service.type }}
+  ports:
+    - port: {{ .Values.db.service.port }}
+      protocol: TCP
+      name: db
+  selector:
+    {{- include "octophp.selectorLabels" . | nindent 4 }}-db
