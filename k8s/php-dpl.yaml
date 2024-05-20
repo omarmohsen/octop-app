@@ -46,7 +46,7 @@ spec:
           value: mysql
         - name: APP_ENV
           value: local
-        image: localhost/test:latest
+        image: docker.io/omarmohsen/octop-app:0.1
         imagePullPolicy: IfNotPresent
         name: octophp
         ports:
